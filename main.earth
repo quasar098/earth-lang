@@ -1,0 +1,18 @@
+# test
+
+# string test
+var string hello_message = "Hello world!"
+print(hello_message)
+
+# int test
+var int amogus = 102
+print(amogus*2)
+
+# list test
+var list<int> ages = [123, 29, 40]
+print(ages+120)
+
+# hashmap test
+var hashmap<int : string> hashers = {1: "Welcome to the game", 2: "The game is non-existent"}
+hashers.set(3, "Added a title to this list")
+print(hashers)
