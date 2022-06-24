@@ -5,7 +5,9 @@ from parse import parse
 def main():
     with open("main.earth") as file:
         text = file.read()
-    tree = parse(lex(text))
+    lexed = lex(text)
+    print(lexed)
+    tree = parse(lexed)
     print(tree)
 
 

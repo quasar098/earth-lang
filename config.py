@@ -1,4 +1,5 @@
 from tokens import *
+from expression import *
 
 COMMENT_SYMBOL = "#"
 SINGLE_LEN_KEYWORDS = [
@@ -36,6 +37,13 @@ SPACE = " "
 KEYWORDS = SINGLE_LEN_KEYWORDS + OTHER_KEYWORDS
 KEYWORDS = tuple(KEYWORDS)
 
+TYPE_KEYWORDS = [
+    "hashmap",
+    "int",
+    "string",
+    "list"
+]
+
 PATTERNS = {
     "+": AddOperator,
     "-": SubtractOperator,
@@ -57,3 +65,9 @@ PATTERNS = {
     ":": Colon,
     ".": Period,
 }
+
+# grammar format: [[format expected], [indexes of format which will be passed in as arguments], end result]
+GRAMMAR = [
+    [["var", "string", Identifier, '=', IntegerLiteral, Newline], [2, 4, 1], AssignmentExpression],
+    [["var", "int", Identifier, "=", StringLiteral, Newline], [2, 4, 1], AssignmentExpression]
+]

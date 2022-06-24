@@ -6,6 +6,8 @@ def gen_lexemes(text: str):
     lexeme = ""
     commenting = False
     in_string = ""
+    comment_eater = ""
+    title = "Unnamed Module"
     string_cooldown = False
     for index, char in enumerate(text):  # loop over each char in the source text
 
@@ -30,8 +32,12 @@ def gen_lexemes(text: str):
         if char == COMMENT_SYMBOL:
             commenting = True  # start a comment
         if commenting:
+            comment_eater += char
             if char == "\n":  # break out of a comment if newline
                 commenting = False
+                if comment_eater[:2] == "##":
+                    title = comment_eater[2:-1].lstrip()
+                comment_eater = ""
             continue
 
         # add lexemes
@@ -42,12 +48,14 @@ def gen_lexemes(text: str):
             if lexeme != '':  # only add if lexeme has something
                 out.append(lexeme)
             lexeme = ""
+    out.insert(0, title)
     return out
 
 
 def lex(text: str) -> list[Token]:
     out = []
     lexemes = gen_lexemes(text)
+    title, lexemes = lexemes[0], lexemes[1:]
     in_string = None
     for lexeme in lexemes:
         if lexeme in PATTERNS:
@@ -79,4 +87,5 @@ def lex(text: str) -> list[Token]:
         else:
             last_was_newline = False
         compressed.append(token)
+    compressed.insert(0, Title(title))
     return compressed

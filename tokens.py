@@ -1,4 +1,9 @@
+from typing import Any
+
+
 class Token:
+    attribute: Any
+
     def __repr__(self):
         return f"<Token({self.__dict__})>"
 
@@ -68,9 +73,13 @@ class Keyword(Token):
     def __repr__(self):
         return f"<Keyword({self.attribute})>"
 
+    def __eq__(self, other: "Keyword"):
+        return self.attribute == other.attribute
+
 
 class StringLiteral(str, Literal):
     def __init__(self, value: str):
+        super().__init__()
         self.attribute = value
 
     def __str__(self):
@@ -82,6 +91,7 @@ class StringLiteral(str, Literal):
 
 class IntegerLiteral(Literal, int):
     def __init__(self, integer: int):
+        super().__init__()
         self.attribute = integer
 
     def __repr__(self):
@@ -207,3 +217,11 @@ class Period(Token):
 
     def __repr__(self):
         return "<Period>"
+
+
+class Title(Token):
+    def __init__(self, attr=None):
+        self.attribute = attr
+
+    def __repr__(self):
+        return f"<Title({self.attribute})>"

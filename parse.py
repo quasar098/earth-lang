@@ -2,17 +2,19 @@ from config import *
 from expression import *
 
 
-def parse(lexemes: list[Token]):
+def parse(lexemes: list[Token]) -> Module:
     position = 0
 
-    def lookahead(amount):
-        return lexemes[amount+position]
-    tree = Planet()
+    def lookahead(am_fwd) -> Token:
+        """Returns the lexeme infront of pos"""
+        return lexemes[am_fwd+position]
 
-    while position != len(lexemes):
-        lexeme = lexemes[position]
-        position += 1
-        ast.append(lexeme)
+    def eat(am_fwd) -> Token:
+        """Mutates the lexemes"""
+        food = lexemes[am_fwd + position]
+        lexemes.pop(am_fwd + position)
+        return food
 
-    return ast
+    tree = Module(eat(0).attribute)
 
+    return tree
